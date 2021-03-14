@@ -1,0 +1,14 @@
+npm outdated //Lista as bibliotecas instaladas que estão desatualizadas 
+npm ls --depth=0 //Lista apenas as bibliotecas instaladas, sem as dependencias 
+
+
+
+Versão: 3.14.1
+3 = Major (Grandes alterações que podem ter broken changes)
+14 = Minor (Normalmente recursos que não tem a possibilidade de broken changes)
+1 = Patch (Normalmente alguma correção)
+
+exemplo de versão de dependencias
+"express" : "^4.1.1" //quando rodar o "npm i", atualiza o mais recente de Minor e Patch 
+"express" : "~4.1.1" //quando rodar o "npm i", atualiza ao mais recente Patch
+"express" : "4.1.1" //congela versão
