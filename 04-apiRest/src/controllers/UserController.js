@@ -4,7 +4,8 @@ class UserController {
   async create(req, res) {
     try {
       const response = await User.create(req.body);
-      return res.json({ User: response });
+      const { id, name, email } = response;
+      return res.json({ id, name, email });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -23,34 +24,26 @@ class UserController {
 
   async show(req, res) {
     try {
-      const { id } = req.params;
-      const user = await User.findByPk(id);
-      return res.json(user);
+      const user = await User.findByPk(req.userId);
+      const { id, name, email } = user;
+      return res.json({ id, name, email });
     } catch (e) {
       return res.json(null);
     }
   }
 
-  // update
   async update(req, res) {
     try {
-      const { id } = req.params;
-      if (!id) {
-        return res.status(400).json({
-          errors: ['id not found'],
-        });
-      }
-
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({
           errors: ['User not found'],
         });
       }
-
       const response = await user.update(req.body);
-      return res.json(response);
+      const { id, name, email } = response;
+      return res.json({ id, name, email });
     } catch (e) {
       return res.json(null);
     }
@@ -58,14 +51,7 @@ class UserController {
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      if (!id) {
-        return res.status(400).json({
-          errors: ['id not found'],
-        });
-      }
-
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({
@@ -74,7 +60,8 @@ class UserController {
       }
 
       await user.destroy();
-      return res.json(user);
+      const { id, name, email } = user;
+      return res.json({ id, name, email });
     } catch (e) {
       return res.json(null);
     }
